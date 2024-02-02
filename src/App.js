@@ -45,7 +45,7 @@ const App = () => {
       setTotalDataApi('');
       setTotalDataDatabase('');
       setLoading(true);
-      
+
       const response = await axios.post(`http://localhost:3001/runModule/${selectedModule}`);
 
       if (response.data.success) {
@@ -104,7 +104,7 @@ const App = () => {
       setMessage('');
       setTotalDataApi('');
       setTotalDataDatabase('');
-  
+
       // Tampilkan SweetAlert2 untuk konfirmasi penghapusan
       const result = await Swal.fire({
         text: `Apakah Anda yakin ingin menghapus data dari tabel ${selectedModule}?`,
@@ -115,12 +115,12 @@ const App = () => {
         confirmButtonText: 'Ya, Hapus!',
         cancelButtonText: 'Batal',
       });
-  
+
       // Jika pengguna mengkonfirmasi penghapusan
       if (result.isConfirmed) {
         setLoading(true);
         const response = await axios.delete(`http://localhost:3001/deleteData/${selectedModule}`);
-  
+
         if (response.data.success) {
           // setMessage(response.data.message);
           setLoading(false);
@@ -132,7 +132,7 @@ const App = () => {
           });
         }
       }
-  
+
     } catch (error) {
       if (error.response && error.response.status === 404) {
         setLoading(false);
@@ -153,7 +153,7 @@ const App = () => {
 
   return (
     <div className='container mt-5'>
-      <h1 className="mb-4" style={{ textAlign: "center" }}>Migration Data Situ Sevima</h1>
+      <h1 className="mb-4" style={{ textAlign: "center" }}>Migrasi Data Situ Sevima</h1>
       <div className='row'>
         <div className='col-lg-12'>
           <select className="form-select" id="moduleDropdown" aria-label="Default select example" onChange={handleChangeDropdown} value={selectedModule} disabled={loading}>
@@ -180,7 +180,7 @@ const App = () => {
         </div>
         <div className='col-md-4'>
           <button className="btn btn-danger" onClick={handleDeleteData} disabled={!selectedModule || loading} style={{ marginBottom: "20px", width: "100%" }}>
-            Hapus Data di Tabel {selectedModule}
+            Hapus Data di Tabel
           </button>
         </div>
       </div>
@@ -188,9 +188,11 @@ const App = () => {
       <div className='row'>
         {
           loading === true ?
-            <div class="d-flex align-items-center">
-              <strong role="status">Processing...</strong>
-              <div class="spinner-border ms-auto" aria-hidden="true"></div>
+            <div className="d-flex align-items-center">
+              <button className="btn btn-secondary" type="button" disabled>
+                <span className="spinner-border spinner-border-sm" aria-hidden="true" style={{marginRight: "10px"}}></span>
+                <span role="status">Loading...</span>
+              </button>
             </div>
             :
             ""
